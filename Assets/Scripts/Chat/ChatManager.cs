@@ -1,10 +1,13 @@
 using Mirror;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Principal;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Windows;
+
 
 public class ChatManager : NetworkBehaviour
 {
@@ -15,67 +18,107 @@ public class ChatManager : NetworkBehaviour
     private PlayerInputs _input;
     [Header("Bubble Management")]
     public GameObject BubblePreset;
-    private Transform ChatPoint;
-    public Queue<ChatBubble> bubbles;
+    public GameObject ChatText;
     public int limit = 1;
     public float timeout = 3f;
-    private TMP_InputField _InputField;
 
+
+    private TMP_InputField _InputField;
+    public GameObject FeedContent;
     private PlayerController Player;
+    public int feed_limit = 100;
+    public Queue<TMP_Text> FeedContentQueue;
     void Start()
     {
-        bubbles = new Queue<ChatBubble>();
-        _InputField = GetComponentInChildren<TMP_InputField>();  
+        _InputField = GetComponentInChildren<TMP_InputField>();
+        FeedContentQueue = new Queue<TMP_Text>();
     }
     public void SetPlayer(PlayerController _player)
     {
         Player = _player;
         _input = _player.gameObject.GetComponent<PlayerInputs>();
-        ChatPoint = _player.transform.Find("Speech_point");
+        playerInput = _player.gameObject.GetComponent<PlayerInput>();
     }
 
 
-    
+
     public void SendChat()
     {
+
+        
         if (playerInput.currentActionMap.name != "Chat")return;
         if (!_input.send)return;
         if (_InputField.text == "") return;
-        
-        
-        GameObject go_bubble = Instantiate(BubblePreset, ChatPoint);
-        
-        
+
         string _text = _InputField.text;
         _InputField.text = "";
-        ChatBubble _bubble = go_bubble.GetComponent<ChatBubble>();
 
-        MoveBubblesUp(1.5f);
 
-        _bubble.Chat(_text);
-
-        bubbles.Enqueue(_bubble);
-
-        StartCoroutine(BubbleTimeout(_bubble,timeout));
-    }
-
-    private void MoveBubblesUp(float _distance)
-    {
-       foreach(var bubble in bubbles)
+        //Chat Commands
+        if(_text != "" &&  _text.IndexOf("/") == 0)
         {
-            bubble.transform.localPosition = new Vector3(bubble.transform.localPosition.x, bubble.transform.localPosition.y + _distance, bubble.transform.localPosition.z);
+            ChatCommand(_text);
+            return;
         }
 
-        //Bubble Limit
 
-        if (bubbles.Count != 0 && bubbles.Count > limit -1)
-            if (!bubbles.Peek().disappearing) bubbles.Dequeue().Die();
+        if (Player.isLocalPlayer)
+        {
+            Player.bubbleSpawner.SpawnBubble(_text);
+            Player.feedManager.PostFeed(_text); 
+        }
+
+        
     }
-
-    private IEnumerator BubbleTimeout(ChatBubble _bubble,float timeout)
+    
+    public void ChatCommand(string _command)
     {
-        yield return new WaitForSeconds(timeout);
-        if(bubbles.Peek().Equals(_bubble)) bubbles.Dequeue();
-        _bubble.Die();
+        if (_command.Split(" ")[0] == "/username" && _command.Split(" ").Length >= 2)
+        {
+            Player.SetUsername(_command.Split(" ")[1]);
+
+            LocalMeesage("Changing username to " + _command.Split(" ")[1]);
+
+        }
+
     }
+
+
+
+
+    public void LocalMeesage(string _text)
+    {
+        GameObject _chattext = Instantiate(ChatText, FeedContent.transform);
+        TMP_Text tMP_Text = _chattext.GetComponent<TMP_Text>();
+
+
+        tMP_Text.text =  _text;
+        tMP_Text.color = Color.yellow;
+
+        FeedContentQueue.Enqueue(tMP_Text);
+
+        if (FeedContentQueue.Count > feed_limit)
+        {
+            Destroy(FeedContentQueue.Dequeue().gameObject);
+        }
+    }
+
+
+
+
+
+
+
+    public void SelectChat()
+    {
+        playerInput.SwitchCurrentActionMap("Chat");
+    }
+
+    public void DeselectChat()
+    {
+        playerInput.SwitchCurrentActionMap("Movement");
+    }
+
+
+
 }

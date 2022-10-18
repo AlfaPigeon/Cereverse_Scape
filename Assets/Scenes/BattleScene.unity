@@ -197,7 +197,7 @@ Camera:
   field of view: 40
   orthographic: 1
   orthographic size: 10
-  m_Depth: -1
+  m_Depth: 1
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -1175,8 +1175,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1969764951}
   - component: {fileID: 1969764954}
-  - component: {fileID: 1969764953}
   - component: {fileID: 1969764952}
+  - component: {fileID: 1969764956}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -1213,35 +1213,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   offsetX: 0
   offsetY: 0
---- !u!114 &1969764953
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1969764950}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b0fecffa3f624585964b0d0eb21b18e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Port: 7777
-  DualMode: 1
-  NoDelay: 1
-  Interval: 10
-  Timeout: 10000
-  FastResend: 2
-  CongestionWindow: 0
-  SendWindowSize: 4096
-  ReceiveWindowSize: 4096
-  MaxRetransmit: 40
-  NonAlloc: 1
-  MaximizeSendReceiveBuffersToOSLimit: 1
-  ReliableMaxMessageSize: 298449
-  UnreliableMaxMessageSize: 1199
-  debugLog: 0
-  statisticsGUI: 0
-  statisticsLog: 0
 --- !u!114 &1969764954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1260,9 +1231,9 @@ MonoBehaviour:
   serverTickRate: 30
   offlineScene: 
   onlineScene: 
-  transport: {fileID: 1969764953}
-  networkAddress: localhost
-  maxConnections: 100
+  transport: {fileID: 1969764956}
+  networkAddress: 127.0.0.1
+  maxConnections: 10
   authenticator: {fileID: 0}
   playerPrefab: {fileID: 2116543737760783067, guid: 4a3ac823238061d44b48468d35713266,
     type: 3}
@@ -1270,6 +1241,34 @@ MonoBehaviour:
   playerSpawnMethod: 0
   spawnPrefabs:
   - {fileID: 5202334847189106135, guid: bede13d7a981f38448e64589906e239d, type: 3}
+  - {fileID: 7305994469361375193, guid: cf52ef9458201644c85f006d0767759f, type: 3}
+--- !u!114 &1969764956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1969764950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0110f245bfcfc7d459681f7bd9ebc590, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  port: 7779
+  maxMessageSize: 16384
+  handshakeMaxSize: 3000
+  noDelay: 1
+  sendTimeout: 5000
+  receiveTimeout: 20000
+  serverMaxMessagesPerTick: 10000
+  clientMaxMessagesPerTick: 1000
+  batchSend: 1
+  waitBeforeSend: 0
+  clientUseWss: 0
+  sslEnabled: 0
+  sslCertJson: ./cert.json
+  sslProtocols: 3072
+  _logLevels: 1
 --- !u!4 &2065624636 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7642060859846502740, guid: 989870625b0f8204180ef9815b8fbe38,
@@ -1380,6 +1379,80 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d7cd771e3668f264a9636f6f3e6a3891, type: 3}
+--- !u!1001 &6238942086211963483
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4458630260380665370, guid: ba757a519d03d6e4c9958747e0ea9a44,
+        type: 3}
+      propertyPath: sceneId
+      value: 4066383081
+      objectReference: {fileID: 0}
+    - target: {fileID: 6938851724719392420, guid: ba757a519d03d6e4c9958747e0ea9a44,
+        type: 3}
+      propertyPath: m_Name
+      value: cartoonape_NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 7710180488508464158, guid: ba757a519d03d6e4c9958747e0ea9a44,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7710180488508464158, guid: ba757a519d03d6e4c9958747e0ea9a44,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -14.84
+      objectReference: {fileID: 0}
+    - target: {fileID: 7710180488508464158, guid: ba757a519d03d6e4c9958747e0ea9a44,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7710180488508464158, guid: ba757a519d03d6e4c9958747e0ea9a44,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.62
+      objectReference: {fileID: 0}
+    - target: {fileID: 7710180488508464158, guid: ba757a519d03d6e4c9958747e0ea9a44,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7710180488508464158, guid: ba757a519d03d6e4c9958747e0ea9a44,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7710180488508464158, guid: ba757a519d03d6e4c9958747e0ea9a44,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7710180488508464158, guid: ba757a519d03d6e4c9958747e0ea9a44,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7710180488508464158, guid: ba757a519d03d6e4c9958747e0ea9a44,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7710180488508464158, guid: ba757a519d03d6e4c9958747e0ea9a44,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7710180488508464158, guid: ba757a519d03d6e4c9958747e0ea9a44,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ba757a519d03d6e4c9958747e0ea9a44, type: 3}
 --- !u!1001 &7305994469512280215
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1391,6 +1464,26 @@ PrefabInstance:
         type: 3}
       propertyPath: sceneId
       value: 3540661303
+      objectReference: {fileID: 0}
+    - target: {fileID: 6959189427287803296, guid: cf52ef9458201644c85f006d0767759f,
+        type: 3}
+      propertyPath: serverOnly
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7305994468037368224, guid: cf52ef9458201644c85f006d0767759f,
+        type: 3}
+      propertyPath: m_OnSelect.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SelectChat
+      objectReference: {fileID: 0}
+    - target: {fileID: 7305994468037368224, guid: cf52ef9458201644c85f006d0767759f,
+        type: 3}
+      propertyPath: m_OnEndEdit.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SendChat
+      objectReference: {fileID: 0}
+    - target: {fileID: 7305994468037368224, guid: cf52ef9458201644c85f006d0767759f,
+        type: 3}
+      propertyPath: m_OnDeselect.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: DeselectChat
       objectReference: {fileID: 0}
     - target: {fileID: 7305994468196854710, guid: cf52ef9458201644c85f006d0767759f,
         type: 3}

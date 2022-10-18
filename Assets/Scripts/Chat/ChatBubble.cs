@@ -58,7 +58,7 @@ public class ChatBubble : MonoBehaviour
 
             //Translation
             
-            transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y+i, transform.localPosition.z);
+            //transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y+i, transform.localPosition.z);
             
             yield return new WaitForSeconds(timeout);
         }

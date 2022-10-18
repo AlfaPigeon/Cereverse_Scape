@@ -472,10 +472,13 @@ GameObject:
   - component: {fileID: 4680512323197245958}
   - component: {fileID: 4680512323197245959}
   - component: {fileID: 478774922356716581}
-  - component: {fileID: 1920491390783416584}
+  - component: {fileID: 8548095655003075602}
+  - component: {fileID: 113673696188963310}
   - component: {fileID: 2545700209626932764}
   - component: {fileID: 4375302647768543515}
   - component: {fileID: 1083945147235926936}
+  - component: {fileID: 8500130272907754516}
+  - component: {fileID: 8004703469228869466}
   m_Layer: 0
   m_Name: cartoonape
   m_TagString: Untagged
@@ -558,6 +561,7 @@ MonoBehaviour:
   username: Player
   SpeechPoint: {fileID: 2703642711135656749}
   NamePlate: {fileID: 127450898400957044}
+  bubbleSpawner: {fileID: 0}
 --- !u!195 &4680512323197245976
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -569,7 +573,7 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3.5
-  m_Acceleration: 16
+  m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
   m_StoppingDistance: 0
@@ -587,7 +591,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2116543737760783067}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
@@ -647,7 +651,7 @@ MonoBehaviour:
   visible: 0
   m_AssetId: 4a3ac823238061d44b48468d35713266
   hasSpawned: 0
---- !u!114 &1920491390783416584
+--- !u!114 &8548095655003075602
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -659,12 +663,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 1
+  syncMode: 0
   syncInterval: 0.1
-  clientAuthority: 1
+  clientAuthority: 0
   sendRate: 30
   bufferTimeMultiplier: 2
-  bufferSizeLimit: 128
+  bufferSizeLimit: 64
   catchupNegativeThreshold: -1
   catchupPositiveThreshold: 1
   catchupSpeed: 0.009999999776482582
@@ -684,6 +688,22 @@ MonoBehaviour:
   showGizmos: 0
   showOverlay: 0
   overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
+--- !u!114 &113673696188963310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2116543737760783067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f6f3bf89aa97405989c802ba270f815, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 1
+  animator: {fileID: 4680512323197245979}
 --- !u!136 &2545700209626932764
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -707,7 +727,7 @@ CharacterController:
   m_GameObject: {fileID: 2116543737760783067}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Height: 2
   m_Radius: 0.5
@@ -732,6 +752,35 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &8500130272907754516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2116543737760783067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a30506fe4579ece4fa8a4b2fa63cc81b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  BubblePreset: {fileID: 5202334847189106135, guid: bede13d7a981f38448e64589906e239d,
+    type: 3}
+  ChatPoint: {fileID: 2703642711135656749}
+--- !u!114 &8004703469228869466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2116543737760783067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd3ab216d2162645bedbdd2aed64941, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2205374161762580864
 GameObject:
   m_ObjectHideFlags: 0
