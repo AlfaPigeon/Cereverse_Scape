@@ -479,6 +479,7 @@ GameObject:
   - component: {fileID: 1083945147235926936}
   - component: {fileID: 8500130272907754516}
   - component: {fileID: 8004703469228869466}
+  - component: {fileID: 7357381549628573115}
   m_Layer: 0
   m_Name: cartoonape
   m_TagString: Untagged
@@ -562,6 +563,7 @@ MonoBehaviour:
   SpeechPoint: {fileID: 2703642711135656749}
   NamePlate: {fileID: 127450898400957044}
   bubbleSpawner: {fileID: 0}
+  feedManager: {fileID: 0}
 --- !u!195 &4680512323197245976
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -571,7 +573,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 2116543737760783067}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 0.1
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -713,7 +715,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 2116543737760783067}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.5
   m_Height: 1
   m_Direction: 1
@@ -781,6 +783,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3ab216d2162645bedbdd2aed64941, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+--- !u!114 &7357381549628573115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2116543737760783067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b58dc2b7d59fc744ad3a59be023ec61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  Health: 100
+  Damage: 0
+  inBattle: 0
 --- !u!1 &2205374161762580864
 GameObject:
   m_ObjectHideFlags: 0

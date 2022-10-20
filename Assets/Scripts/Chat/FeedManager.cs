@@ -31,6 +31,12 @@ public class FeedManager : NetworkBehaviour
         cmdPostFeed(_text);
     }
 
+
+    public void PostLocalMessage(string _text, Color color)
+    {
+        chatManager.LocalMessage(_text, color);
+    }
+
     [Command]
     public void cmdPostFeed(string _text)
     {

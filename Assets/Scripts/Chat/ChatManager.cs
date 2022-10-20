@@ -77,7 +77,7 @@ public class ChatManager : NetworkBehaviour
         {
             Player.SetUsername(_command.Split(" ")[1]);
 
-            LocalMeesage("Changing username to " + _command.Split(" ")[1]);
+            LocalMessage("Changing username to " + _command.Split(" ")[1],Color.yellow);
 
         }
 
@@ -86,14 +86,14 @@ public class ChatManager : NetworkBehaviour
 
 
 
-    public void LocalMeesage(string _text)
+    public void LocalMessage(string _text,Color color)
     {
         GameObject _chattext = Instantiate(ChatText, FeedContent.transform);
         TMP_Text tMP_Text = _chattext.GetComponent<TMP_Text>();
 
 
         tMP_Text.text =  _text;
-        tMP_Text.color = Color.yellow;
+        tMP_Text.color = color;
 
         FeedContentQueue.Enqueue(tMP_Text);
 

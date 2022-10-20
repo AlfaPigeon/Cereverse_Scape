@@ -12,7 +12,7 @@ using UnityEngine.Windows;
 
 public class PlayerController : NetworkBehaviour
 {
- 
+    [SyncVar]
     public string username = "Player";
     public Transform SpeechPoint;
     public TMP_Text NamePlate;
@@ -37,13 +37,18 @@ public class PlayerController : NetworkBehaviour
         _animator = GetComponent<Animator>();
         _agent = GetComponent<NavMeshAgent>();
 
-        
-        NamePlate.text = username;
-        
+        foreach (PlayerController p in FindObjectsOfType<PlayerController>())
+        {
+            p.UpdateNamePlate();
+        }
+
+
         if (!isLocalPlayer || SceneManager.GetActiveScene().name == "Login") return;
 
         username = PlayerPrefs.GetString("Username");
-        cmdSetUsername();
+        cmdSetUsername(username);
+
+
 
         CinemachineVirtualCamera _camera = FindObjectOfType<CinemachineVirtualCamera>();
             _camera.Follow = transform;
@@ -86,8 +91,8 @@ public class PlayerController : NetworkBehaviour
     public void SetUsername(string _username)
     {
         if (!isLocalPlayer) return;
-        username = _username;
-        cmdSetUsername();
+        
+        cmdSetUsername(_username);
     }
 
 
@@ -109,11 +114,11 @@ public class PlayerController : NetworkBehaviour
         rpcMoveToCursor(_destination);
     }
     [Command]
-    private void cmdSetUsername()
+    private void cmdSetUsername(string  _username)
     {
         //Put server validation checks here
-
-        rpcSetUsername(username);
+        username = _username;
+        rpcUpdateNamePlate();
     }
 
 
@@ -125,12 +130,15 @@ public class PlayerController : NetworkBehaviour
     }
 
     [ClientRpc]
-    private void rpcSetUsername(string _username)
+    private void rpcUpdateNamePlate()
     {
-        username = _username;
-        NamePlate.text = _username;
+        UpdateNamePlate();
     }
 
-
+    [ClientRpc]
+    public void UpdateNamePlate()
+    {
+        NamePlate.text = username;
+    }
 
 }

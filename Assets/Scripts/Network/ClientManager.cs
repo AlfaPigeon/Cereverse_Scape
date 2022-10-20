@@ -10,7 +10,7 @@ public class ClientManager : MonoBehaviour
     private void Start()
     {
         networkManager = FindObjectOfType<NetworkManager>();
-        NetworkServer.SpawnObjects();
+        //NetworkServer.SpawnObjects();
 
 
     }
