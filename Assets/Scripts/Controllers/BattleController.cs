@@ -93,7 +93,7 @@ public class BattleController : NetworkBehaviour
             int damage = damage_queue.Dequeue();
             feedManager.PostLocalMessage("Took " + damage + " damage", Color.red);
             cmdSetHealth(Health - damage);
-            
+            feedManager.PostLocalMessage(Health-damage + "/100 health remaining", Color.green);
         }
        
     }
@@ -158,7 +158,7 @@ public class BattleController : NetworkBehaviour
     private void cmdSetHealth(int _health)
     {
         Health = _health;
-        rpcSetHealthCallBack();
+        //rpcSetHealthCallBack();
     }
 
     //Client rpc's
