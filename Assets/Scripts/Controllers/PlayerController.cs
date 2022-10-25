@@ -22,6 +22,8 @@ public class PlayerController : NetworkBehaviour
     private ChatManager _ChatManager;
     public ChatBubbleSpawner bubbleSpawner;
     public FeedManager feedManager;
+
+    private BattleController BattleController;
     void Start()
     {
 
@@ -33,7 +35,7 @@ public class PlayerController : NetworkBehaviour
         feedManager = GetComponent<FeedManager>();
         _input = GetComponent<PlayerInputs>();
 
-
+        BattleController = GetComponent<BattleController>();
         _animator = GetComponent<Animator>();
         _agent = GetComponent<NavMeshAgent>();
 
@@ -73,7 +75,7 @@ public class PlayerController : NetworkBehaviour
     public void MoveToCursor()
     {
 
-        if (_input.move)
+        if (_input.move && !BattleController.inBattle)
         {
             
             Ray movePosition = Camera.main.ScreenPointToRay(_input.cursor_location);
@@ -111,6 +113,10 @@ public class PlayerController : NetworkBehaviour
     {
         //Put server validation checks here
 
+        BattleController battleController = GetComponent<BattleController>();
+        if (battleController != null && battleController.inBattle)return;
+
+        //====
         rpcMoveToCursor(_destination);
     }
     [Command]
