@@ -1,4 +1,5 @@
 using Mirror;
+using PlayFab.Networking;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -12,7 +13,7 @@ public class LoginManager : MonoBehaviour
     [Header("Network")]
     [SerializeField] NetworkManager networkManager;
     public string IP = "127.0.0.1";
-    public string PORT = "7779";
+    public string PORT = "7777";
     [Header("Login Fields")]
     public TMP_InputField m_InputField;
 
@@ -24,8 +25,9 @@ public class LoginManager : MonoBehaviour
         PlayerPrefs.SetString("Username", m_InputField.text);
 
 
+
         JoinServer();
-        networkManager.ServerChangeScene("GameScene");
+        //networkManager.ServerChangeScene("GameScene");
     }
 
     public void JoinServer()

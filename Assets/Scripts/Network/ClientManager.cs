@@ -1,4 +1,5 @@
 using Mirror;
+using PlayFab.Networking;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,12 +7,10 @@ using UnityEngine;
 public class ClientManager : MonoBehaviour
 {
     public Transform spawn;
-    private NetworkManager networkManager;
+    private UnityNetworkServer mServer; 
     private void Start()
     {
-        networkManager = FindObjectOfType<NetworkManager>();
+        mServer = FindObjectOfType<UnityNetworkServer>();
         //NetworkServer.SpawnObjects();
-
-
     }
 }

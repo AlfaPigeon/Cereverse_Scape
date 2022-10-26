@@ -12,8 +12,9 @@ using UnityEngine.Windows;
 
 public class PlayerController : NetworkBehaviour
 {
-    [SyncVar]
-    public string username = "Player";
+    [SyncVar(hook=nameof(SetUsername))]
+    public string username = "";
+
     public Transform SpeechPoint;
     public TMP_Text NamePlate;
     private NavMeshAgent _agent;
@@ -24,10 +25,13 @@ public class PlayerController : NetworkBehaviour
     public FeedManager feedManager;
 
     private BattleController BattleController;
+
+
+
     void Start()
     {
 
-        Debug.Log("Player Started");
+        Debug.Log("Player spawned");
         
         PlayerInput playerInput = GetComponent<PlayerInput>();
 
@@ -39,34 +43,25 @@ public class PlayerController : NetworkBehaviour
         _animator = GetComponent<Animator>();
         _agent = GetComponent<NavMeshAgent>();
 
-        foreach (PlayerController p in FindObjectsOfType<PlayerController>())
+        if (isLocalPlayer)
         {
-            p.UpdateNamePlate();
-        }
 
+            cmdSetUsername(PlayerPrefs.GetString("Username"));
 
-        if (!isLocalPlayer || SceneManager.GetActiveScene().name == "Login") return;
-
-        username = PlayerPrefs.GetString("Username");
-        cmdSetUsername(username);
-
-
-
-        CinemachineVirtualCamera _camera = FindObjectOfType<CinemachineVirtualCamera>();
+            CinemachineVirtualCamera _camera = FindObjectOfType<CinemachineVirtualCamera>();
             _camera.Follow = transform;
             _camera.LookAt = transform;
 
-        _ChatManager = FindObjectOfType<ChatManager>();
-        _ChatManager.SetPlayer(this);
-        
+            _ChatManager = FindObjectOfType<ChatManager>();
+            _ChatManager.SetPlayer(this);
+
+        }
+
 
     }
 
-
-   
     void Update()
-    {
-       
+    {   
         if (!isLocalPlayer) return;
         
         MoveToCursor();
@@ -74,38 +69,28 @@ public class PlayerController : NetworkBehaviour
    
     public void MoveToCursor()
     {
-
         if (_input.move && !BattleController.inBattle)
         {
-            
             Ray movePosition = Camera.main.ScreenPointToRay(_input.cursor_location);
             if (Physics.Raycast(movePosition, out var hit))
             {
-                //_agent.SetDestination(hit.point);
                 cmdMoveToCursor(hit.point);
             }
         }
-        
         _animator.SetFloat("Velocity", _agent.velocity.magnitude / _agent.speed);
-
     }
 
-    public void SetUsername(string _username)
+    private void SetUsername(string old_username, string new_username)
+    {
+        username = new_username;
+        NamePlate.text = new_username;
+    }
+
+    public void ChangeUsername(string _username)
     {
         if (!isLocalPlayer) return;
-        
         cmdSetUsername(_username);
     }
-
-
-
-    public override void OnStartClient()
-    {
-        base.OnStartClient();
-
-
-    }
-
 
     //Server commands
     [Command]
@@ -117,34 +102,39 @@ public class PlayerController : NetworkBehaviour
         if (battleController != null && battleController.inBattle)return;
 
         //====
+
+
+        //This is for movement
+        _agent.SetDestination(_destination);
+
         rpcMoveToCursor(_destination);
+
+
     }
+    
+    
+    [ClientRpc]
+    private void rpcMoveToCursor(Vector3 _destination)
+    {
+        //This is for velocity update
+        _agent.SetDestination(_destination);
+    }
+
     [Command]
     private void cmdSetUsername(string  _username)
     {
         //Put server validation checks here
         username = _username;
-        rpcUpdateNamePlate();
-    }
-
-
-    //Client rpcs
-    [ClientRpc]
-    private void rpcMoveToCursor(Vector3 _destination)
-    {
-        _agent.SetDestination(_destination);
+        foreach (PlayerController p in FindObjectsOfType<PlayerController>())p.rpcSetUsername(p.username);
     }
 
     [ClientRpc]
-    private void rpcUpdateNamePlate()
+    public void rpcSetUsername(string _username)
     {
-        UpdateNamePlate();
+        username = _username;
+        NamePlate.text=username;
     }
 
-    [ClientRpc]
-    public void UpdateNamePlate()
-    {
-        NamePlate.text = username;
-    }
+
 
 }

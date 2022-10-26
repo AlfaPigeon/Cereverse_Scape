@@ -38,6 +38,8 @@ public class BattleController : NetworkBehaviour
 
     public BattleArea battleArea = null;
 
+    public GameObject Whip;
+
     private void Start()
     {
         player = GetComponent<PlayerController>();
@@ -138,7 +140,7 @@ public class BattleController : NetworkBehaviour
     {
         Health = 100;
         inBattle = true;
-
+        navMeshAgent.destination = transform.position;
         rpcStartBattle();
     }
     [Command]
@@ -175,7 +177,9 @@ public class BattleController : NetworkBehaviour
 
     private void rpcStartBattle()
     {
-        animator.SetBool("Battle", true);
+        if (isLocalPlayer)animator.SetBool("Battle", true);
+        navMeshAgent.destination = transform.position;
+        Whip.SetActive(true);
         StartCoroutine(Hit(AttackWaitTime));
     }
 
@@ -207,13 +211,11 @@ public class BattleController : NetworkBehaviour
 
             animator.SetBool("Battle", false);
 
-
-
-            
-            
         }
-       
-    
+
+        Whip.SetActive(false);
+
+
     }
 
 

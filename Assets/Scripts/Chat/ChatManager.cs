@@ -81,7 +81,7 @@ public class ChatManager : NetworkBehaviour
 
         if (args[0] == "/username" && args.Length >= 2)
         {
-            player.SetUsername(args[1]);
+            player.ChangeUsername(args[1]);
 
             LocalMessage("Changing username to " + _command.Split(" ")[1],Color.yellow);
 

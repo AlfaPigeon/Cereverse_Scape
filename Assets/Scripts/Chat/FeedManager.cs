@@ -16,6 +16,8 @@ public class FeedManager : NetworkBehaviour
     private GameObject ChatText;
 
     private PlayerController Player;
+
+
     private void Start()
     {
         chatManager = FindObjectOfType<ChatManager>();

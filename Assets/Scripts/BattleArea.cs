@@ -1,4 +1,5 @@
 using Mirror;
+using PlayFab.Networking;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,10 +17,10 @@ public class BattleArea : NetworkBehaviour
 
     [Header("Network")]
     public NetworkManager networkManager;
+   
 
     private void Start()
     {
-       
         networkManager = FindObjectOfType<NetworkManager>();
     }
 
